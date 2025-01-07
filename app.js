@@ -8,16 +8,11 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3001;
 
-// Enable CORS
 app.use(cors());
-
-// Parse JSON requests
 app.use(bodyParser.json());
 
-// Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Mega authentication setup
 const { MEGA_EMAIL, MEGA_PASSWORD } = require('./config/config.js');
 const storage = new Storage({
   email: MEGA_EMAIL,
@@ -30,7 +25,6 @@ storage.ready.then(() => {
   console.error('Failed to authenticate:', err);
 });
 
-// Routes
 app.use('/', videoRoutes);
 
 app.listen(PORT, () => {
